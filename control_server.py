@@ -12,8 +12,8 @@ class CommandServer(BaseHTTPRequestHandler):
         if self.path.split("/")[1] == "getData":
             self.send_header("Content-type","application/json")
             self.end_headers()
-            returnDict = {"block": 10315736, "address": 0x8175362afbeee32afb22d05adc0bbd08de32f5ae, "transactions": "blank"}
-            self.wfile.write(bytes(json.dumps(returnDict), "utf-8"))
+            with open("bundle-10315736-0x8175362afbeee32afb22d05adc0bbd08de32f5ae.json") as f:
+                self.wfile.write(bytes(json.dumps(json.load(f)), "utf-8"))
         else:
             self.send_header("Content-type", "text/html")
             self.end_headers()

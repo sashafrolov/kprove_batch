@@ -9,7 +9,7 @@ import argparse
 import logging
 #from find_mev_krun_uniswapv2 import reordering_mev
 #from find_mev_uniswapv2 import reordering_mev
-from ../mev/find_mev_kprove_uniswapv2 import reordering_mev
+import json
 
 parser = argparse.ArgumentParser(description='Run UniswapV2 experiments')
 
@@ -56,11 +56,11 @@ logger.info('Block : %s', args.block)
 
 exchange_name = args.exchange
 
-reserves = pd.read_csv('data-scripts/%s-reserves.csv' % (exchange_name))
+reserves = pd.read_csv('../mev/data-scripts/%s-reserves.csv' % (exchange_name))
 #uniswapv2_pairs = pd.read_csv('data-scripts/latest-data/data/uniswapv2_pairs.csv').set_index('pair')
 
 # TODO : check if exists
-transactions_filepath = 'data-scripts/' + exchange_name + '-processed/' + args.address + '.csv'
+transactions_filepath = '../mev/data-scripts/' + exchange_name + '-processed/' + args.address + '.csv'
 
 pipe = Popen('grep -A 1 "block ' + args.block + '" ' + transactions_filepath, shell=True, stdout=PIPE, stderr=PIPE)
 transactions = pipe.stdout.read() + pipe.stderr.read()
@@ -93,8 +93,14 @@ elif exchange_name == 'sushiswap':
 
 identifier = args.block + '-' + args.address
     
-spec_file = 'experiments/' + identifier + '/bound.k'
-outfile = 'output/'+ identifier +'.out'
+spec_file = '../mev/experiments/' + identifier + '/bound.k'
+outfile = '../mev/output/'+ identifier +'.out'
 
     
-reordering_mev(transactions, spec_file, outfile, acc, tokens, balances, pre_price, post_price)
+obj = {'transactions': transactions, 'spec_file': str(open(spec_file).read()), 'outfile': outfile, 'acc': acc, 'tokens':tokens, 'balances': balances, 'pre_price':pre_price, 'post_price': post_price}
+
+
+print(obj)
+with open('bundle-' + args.block + '-' + args.address + '.json', 'w') as f:
+    json.dump(obj, f)
+
