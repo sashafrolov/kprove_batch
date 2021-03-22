@@ -13,4 +13,4 @@ RUN cd /home && \
 
 RUN python3 -m pip install requests
 
-WORKDIR /home/mev/
+WORKDIR /home/kprove_batch/
