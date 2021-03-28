@@ -12,7 +12,7 @@ if  __name__ == "__main__":
     commandJson = json.loads(commandData)
     # do something with it at this point
     temp = open("temp.txt", "w")
-    temp.write(command_json['spec_file'])
+    temp.write(commandJson['spec_file'])
     reordering_mev(commandJson['transactions'], "temp.txt", "out.txt", commandJson['acc'], commandJson['tokens'], commandJson['balances'], commandJson['pre_price'], commandJson['post_price'])
 
     resp = {"key": "value"}
