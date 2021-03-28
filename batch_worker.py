@@ -17,7 +17,9 @@ if  __name__ == "__main__":
 
     reordering_mev(commandJson['transactions'], "bound.k", "out.txt", commandJson['acc'], commandJson['tokens'], commandJson['balances'], commandJson['pre_price'], commandJson['post_price'])
 
-    resp = {"key": "value"}
+    result = open("out.txt")
+
+    resp = {"result": result.read}
     commandResponse = requests.post(ADDRESS, data = resp) 
 
 
