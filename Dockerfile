@@ -13,4 +13,7 @@ RUN cd /home && \
 
 RUN python3 -m pip install requests
 
-WORKDIR /home/kprove_batch/
+RUN cd /home/mev && \
+    kompile mev.k --backend haskell
+
+WORKDIR /home/mev/
