@@ -2,6 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
 import json
 import sys
+import urllib
 
 hostName = sys.argv[1]
 serverPort = 28080
@@ -27,6 +28,10 @@ class CommandServer(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
         print(post_data)
+        data = urllib.parse.unquote_plus(str(post_data))
+        output = data.split('=')[1]
+        with open("out1.txt", "w") as f:
+            f.write(output)
         self.send_response(200)
         self.send_header("Content-type", "application/json")
         self.end_headers()
