@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
 import json
-import sys
+import sys, os
 import urllib
 
 hostName = sys.argv[1]
@@ -14,8 +14,8 @@ class CommandServer(BaseHTTPRequestHandler):
             self.send_header("Content-type","application/json")
             self.end_headers()
             index = self.path.split("/")[2]
-            with open(os.listdir('data')[index]) as f:
-                print("Returning", os.listdir('data')[index])
+            with open('data/' + os.listdir('data')[int(index)]) as f:
+                print("Returning", os.listdir('data')[int(index)])
                 self.wfile.write(bytes(json.dumps(json.load(f)), "utf-8"))
         else:
             self.send_header("Content-type", "text/html")
@@ -29,10 +29,11 @@ class CommandServer(BaseHTTPRequestHandler):
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
-        print(post_data)
         data = urllib.parse.unquote_plus(str(post_data))
         output = data.split('=')[1]
-        with open("out1.txt", "w") as f:
+        index = int(self.path.split("/")[2])
+        bundleName = os.listdir('data')[int(index)].split('.')[0]
+        with open("output/" + bundleName + ".txt", "w") as f:
             f.write(output)
         self.send_response(200)
         self.send_header("Content-type", "application/json")
