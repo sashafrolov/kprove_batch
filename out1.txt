@@ -24,7 +24,7 @@
     _5
   </N>
 </generatedTop>
-kore-exec: [16848658] Warning (WarnStuckClaimState):
+kore-exec: [14249978] Warning (WarnStuckClaimState):
     (InfoReachability) while checking the implication:
     The proof has reached the final configuration, but the claimed implication is not valid.
 [Warning] Compiler: Deprecated: use claim instead of rule to specify proof

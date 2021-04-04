@@ -13,6 +13,7 @@ class CommandServer(BaseHTTPRequestHandler):
         if self.path.split("/")[1] == "getData":
             self.send_header("Content-type","application/json")
             self.end_headers()
+            index = self.path.split("/")[2]
             with open("bundle-10315736-0x8175362afbeee32afb22d05adc0bbd08de32f5ae.json") as f:
                 self.wfile.write(bytes(json.dumps(json.load(f)), "utf-8"))
         else:
