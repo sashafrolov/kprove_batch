@@ -101,6 +101,6 @@ obj = {'transactions': transactions, 'spec_file': str(open(spec_file).read()), '
 
 
 print(obj)
-with open('bundle-' + args.block + '-' + args.address + '.json', 'w') as f:
+with open('/data/bundle-' + args.block + '-' + args.address + '.json', 'w') as f:
     json.dump(obj, f)
 
