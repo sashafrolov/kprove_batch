@@ -6,7 +6,7 @@ RUN apt-get update && \
 RUN apt-get install -y python3-pip
 
 RUN cd /home && \
-    git clone "https://github.com/pdaian/mev.git"
+    git clone "https://github.com/sashafrolov/mev.git"
 
 RUN cd /home && \
     git clone "https://github.com/sashafrolov/kprove_batch.git"
