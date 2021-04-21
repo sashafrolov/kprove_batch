@@ -19,6 +19,6 @@ if  __name__ == "__main__":
     result = open("out.txt")
 
     resp = {"result": result.read()}
-    commandResponse = requests.post(ADDRESS, data = resp) 
+    commandResponse = requests.post(ADDRESS + "postData/{}".format(index), data = resp) 
 
 
