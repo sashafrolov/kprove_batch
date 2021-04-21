@@ -3,6 +3,7 @@ import time
 import json
 import sys, os
 import urllib
+import itertools
 
 hostName = sys.argv[1]
 serverPort = 28080
@@ -16,7 +17,14 @@ class CommandServer(BaseHTTPRequestHandler):
             index = self.path.split("/")[2]
             with open('data/' + os.listdir('data')[int(index)]) as f:
                 print("Returning", os.listdir('data')[int(index)])
-                self.wfile.write(bytes(json.dumps(json.load(f)), "utf-8"))
+                if len(self.path.split("/")) > 3:
+                    orderIndex = self.path.split("/")[3]
+                    k = self.path.split("/")[4]
+                    obj = json.load(f)
+                    list(itertools.permutation(list(range(obj['transactions'].count('transaction'))])), k))[orderIndex]
+                else:
+                    self.wfile.write(bytes(json.dumps(json.load(f)), "utf-8"))
+
         else:
             self.send_header("Content-type", "text/html")
             self.end_headers()
