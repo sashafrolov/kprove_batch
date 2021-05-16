@@ -11,20 +11,13 @@ serverPort = 28080
 class CommandServer(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
-        if self.path.split("/")[1] == "getData":
+        if len(self.path.split("/")) > 1 and self.path.split("/")[1] == "getData":
             self.send_header("Content-type","application/json")
             self.end_headers()
             index = self.path.split("/")[2]
             with open('data/' + os.listdir('data')[int(index)]) as f:
                 print("Returning", os.listdir('data')[int(index)])
-                if len(self.path.split("/")) > 3:
-                    orderIndex = self.path.split("/")[3]
-                    k = self.path.split("/")[4]
-                    obj = json.load(f)
-                    list(itertools.permutation(list(range(obj['transactions'].count('transaction'))])), k))[orderIndex]
-                else:
-                    self.wfile.write(bytes(json.dumps(json.load(f)), "utf-8"))
-
+                self.wfile.write(bytes(json.dumps(json.load(f)), "utf-8"))
         else:
             self.send_header("Content-type", "text/html")
             self.end_headers()
