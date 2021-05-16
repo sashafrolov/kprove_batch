@@ -14,7 +14,7 @@ if  __name__ == "__main__":
     commandJson = json.loads(commandData)
     # os.system("kompile mev.k --backend haskell")
 
-    reordering_mev(commandJson['transactions'], "bound.k", "out.txt", commandJson['acc'], commandJson['tokens'], commandJson['balances'], commandJson['pre_price'], commandJson['post_price'])
+    reordering_mev(commandJson['transactions'], "bound.k", "out.txt", commandJson['acc'], commandJson['tokens'], commandJson['balances'], commandJson['pre_price'], commandJson['post_price'], commandJson['pair_address'], commandJson['block'], commandJson['convergence'])
 
     result = open("out.txt")
 

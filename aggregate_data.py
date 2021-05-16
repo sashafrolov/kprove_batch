@@ -97,7 +97,7 @@ spec_file = '../mev/experiments/' + identifier + '/bound.k'
 outfile = '../mev/output/'+ identifier +'.out'
 
     
-obj = {'transactions': transactions, 'spec_file': 'bound.k', 'outfile': outfile, 'acc': acc, 'tokens':tokens, 'balances': balances, 'pre_price':pre_price, 'post_price': post_price}
+obj = {'transactions': transactions, 'spec_file': 'bound.k', 'outfile': outfile, 'acc': acc, 'tokens':tokens, 'balances': balances, 'pre_price':pre_price, 'post_price': post_price, 'pair_address': args.address, 'block': args.block, 'convergence': args.convergence}
 
 with open('data/bundle-' + args.block + '-' + args.address + '.json', 'w') as f:
     json.dump(obj, f)
