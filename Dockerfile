@@ -5,15 +5,22 @@ RUN apt-get update && \
 
 RUN apt-get install -y python3-pip
 
-RUN cd /home && \
+RUN mkdir /home/sasha_mev && \
+    cd /home/sasha_mev && \
     git clone "https://github.com/sashafrolov/mev.git"
 
-RUN cd /home && \
+RUN cd /home && \ 
     git clone "https://github.com/sashafrolov/kprove_batch.git"
 
 RUN python3 -m pip install requests
 
-RUN cd /home/mev && \
+RUN cd /home/sasha_mev/mev && \
     kompile mev.k --backend haskell
+
+RUN cd /home/ && \ 
+    git clone "https://github.com/pdaian/mev.git"
+
+RUN cd /home/mev && \
+    kompile mev.k --backend llvm
 
 WORKDIR /home/mev/
