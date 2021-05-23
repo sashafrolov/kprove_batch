@@ -16,7 +16,7 @@ if  __name__ == "__main__":
     commandData = requests.get(ADDRESS + "getData/{}".format(index)).text
     commandJson = json.loads(commandData)
 
-    reordering_mev(commandJson['transactions'], "bound.k", "out.txt", commandJson['acc'], commandJson['tokens'], commandJson['balances'], commandJson['pre_price'], commandJson['post_price'], commandJson['pair_address'], commandJson['block'], commandJson['convergence'], true)
+    reordering_mev(commandJson['transactions'], "bound.k", "out.txt", commandJson['acc'], commandJson['tokens'], commandJson['balances'], commandJson['pre_price'], commandJson['post_price'], commandJson['pair_address'], commandJson['block'], commandJson['convergence'], True)
 
     sys.sdout = old_stdout
     result = buffer.getvalue()
