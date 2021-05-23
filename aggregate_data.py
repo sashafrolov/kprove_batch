@@ -46,6 +46,12 @@ parser.add_argument(
     action="store_true"
 )
 
+parser.add_argument(
+    '-d', '--directory',
+    help="Output directory for data",
+    required=True
+)
+
 
 args = parser.parse_args()    
 logging.basicConfig(level=args.loglevel, format='%(message)s')
@@ -56,11 +62,11 @@ logger.info('Block : %s', args.block)
 
 exchange_name = args.exchange
 
-reserves = pd.read_csv('../mev/data-scripts/%s-reserves.csv' % (exchange_name))
+reserves = pd.read_csv('../mev/data-scripts/latest-data/%s-reserves.csv' % (exchange_name))
 #uniswapv2_pairs = pd.read_csv('data-scripts/latest-data/data/uniswapv2_pairs.csv').set_index('pair')
 
 # TODO : check if exists
-transactions_filepath = '../mev/data-scripts/' + exchange_name + '-processed/' + args.address + '.csv'
+transactions_filepath = '../mev/data-scripts/latest-data/' + exchange_name + '-processed/' + args.address + '.csv'
 
 pipe = Popen('grep -A 1 "block ' + args.block + '" ' + transactions_filepath, shell=True, stdout=PIPE, stderr=PIPE)
 transactions = pipe.stdout.read() + pipe.stderr.read()
@@ -99,6 +105,6 @@ outfile = '../mev/output/'+ identifier +'.out'
     
 obj = {'transactions': transactions, 'spec_file': 'bound.k', 'outfile': outfile, 'acc': acc, 'tokens':tokens, 'balances': balances, 'pre_price':pre_price, 'post_price': post_price, 'pair_address': args.address, 'block': args.block, 'convergence': args.convergence}
 
-with open('data/bundle-' + args.block + '-' + args.address + '.json', 'w') as f:
+with open(args.directory + 'bundle-' + args.block + '-' + args.address + '.json', 'w') as f:
     json.dump(obj, f)
 

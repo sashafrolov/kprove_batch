@@ -15,8 +15,8 @@ class CommandServer(BaseHTTPRequestHandler):
             self.send_header("Content-type","application/json")
             self.end_headers()
             index = self.path.split("/")[2]
-            with open('data/' + os.listdir('data')[int(index)]) as f:
-                print("Returning", os.listdir('data')[int(index)])
+            with open('data/uniswapv2/' + os.listdir('data/uniswapv2')[int(index)]) as f:
+                print("Returning", os.listdir('data/uniswapv2')[int(index)])
                 self.wfile.write(bytes(json.dumps(json.load(f)), "utf-8"))
         else:
             self.send_header("Content-type", "text/html")
@@ -31,7 +31,7 @@ class CommandServer(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
         data = urllib.parse.unquote_plus(str(post_data))
-        if len(data.split('=')) > 1 and len(self.path.split("/") > 2:
+        if len(data.split('=')) > 1 and len(self.path.split("/")) > 2:
             output = data.split('=')[1]
             index = int(self.path.split("/")[2])
             bundleName = os.listdir('data')[int(index)].split('.')[0]
@@ -42,10 +42,9 @@ class CommandServer(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(bytes(json.dumps({"response": "success"}), "utf-8"))
         else:
-            self.wfile.write(bytes("no")
+            self.wfile.write(bytes("no"))
 
-
-if __name__ == "__main__":        
+if __name__ == "__main__":
     webServer = HTTPServer((hostName, serverPort), CommandServer)
     print("Server started http://%s:%s" % (hostName, serverPort))
 
