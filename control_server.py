@@ -34,7 +34,7 @@ class CommandServer(BaseHTTPRequestHandler):
         if len(data.split('=')) > 1 and len(self.path.split("/")) > 2:
             output = data.split('=')[1]
             index = int(self.path.split("/")[2])
-            bundleName = os.listdir('data')[int(index)].split('.')[0]
+            bundleName = os.listdir('data/uniswapv2')[int(index)].split('.')[0]
             with open("output/" + bundleName + ".txt", "w") as f:
                 f.write(output)
             self.send_response(200)
@@ -42,7 +42,7 @@ class CommandServer(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(bytes(json.dumps({"response": "success"}), "utf-8"))
         else:
-            self.wfile.write(bytes("no"))
+            self.wfile.write(bytes("no", "utf-8"))
 
 if __name__ == "__main__":
     webServer = HTTPServer((hostName, serverPort), CommandServer)
